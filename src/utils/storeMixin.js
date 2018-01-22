@@ -1,3 +1,4 @@
+import wraning from 'warning';
 export default (store, staticReducers, extensions) => {
   const reversedExtensions = [...extensions].reverse();
   store.rrwModule = {};
@@ -30,9 +31,13 @@ export default (store, staticReducers, extensions) => {
     const extArray = reverse ? reversedExtensions : extensions;
     extArray.forEach(extension => {
       const extensionName = extension.constructor.$name;
-      const params = extensionParams[extensionName];
       const state = extensionStates[extensionName];
-      if(params && extension[method]){
+      if(extensionName in extensionParams && extension[method]){
+        const params = extensionParams[extensionName];
+        if(params === undefined){
+          wraning(!!params, `An RrwModule \`${moduleName}\` was bound with an extension \`${extensionName}\` with undefined value (skipped)`);
+          return;
+        }
         resultExtensionStates[extensionName] = extension[method]({moduleName, options, params, state});
       }
     });

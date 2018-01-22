@@ -9,6 +9,7 @@ export default class RrwExEpic extends RrwExtension {
 
   getReduxMiddlewares() {
     // this.rootInjectable = createInjectableEpic(emptyEpic);
+    this.options.staticEpic = this.options.staticEpic || emptyEpic;
     this.rootInjectable = createInjectableEpic(this.options.staticEpic);
     this.middleware = createEpicMiddleware(this.rootInjectable.injectableEpic);
     return this.middleware;

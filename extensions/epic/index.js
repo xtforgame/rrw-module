@@ -55,6 +55,7 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
     key: 'getReduxMiddlewares',
     value: function getReduxMiddlewares() {
       // this.rootInjectable = createInjectableEpic(emptyEpic);
+      this.options.staticEpic = this.options.staticEpic || _makeEpicInjectable.emptyEpic;
       this.rootInjectable = (0, _createInjectableEpic2.default)(this.options.staticEpic);
       this.middleware = (0, _reduxObservable.createEpicMiddleware)(this.rootInjectable.injectableEpic);
       return this.middleware;

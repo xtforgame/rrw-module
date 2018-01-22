@@ -56,7 +56,9 @@ var RrwExSaga = (_temp = _class = function (_RrwExtension) {
   }, {
     key: 'start',
     value: function start() {
-      this.middleware.run(this.options.staticSaga);
+      if (this.options.staticSaga) {
+        this.middleware.run(this.options.staticSaga);
+      }
     }
 
     // remove(moduleName, task){

@@ -11,7 +11,9 @@ export default class RrwExSaga extends RrwExtension {
   }
 
   start(){
-    this.middleware.run(this.options.staticSaga);
+    if(this.options.staticSaga){
+      this.middleware.run(this.options.staticSaga);
+    }
   }
 
   // remove(moduleName, task){

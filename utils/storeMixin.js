@@ -1,12 +1,16 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+var _warning = require('warning');
+
+var _warning2 = _interopRequireDefault(_warning);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,9 +53,13 @@ exports.default = function (store, staticReducers, extensions) {
     var extArray = reverse ? reversedExtensions : extensions;
     extArray.forEach(function (extension) {
       var extensionName = extension.constructor.$name;
-      var params = extensionParams[extensionName];
       var state = extensionStates[extensionName];
-      if (params && extension[method]) {
+      if (extensionName in extensionParams && extension[method]) {
+        var params = extensionParams[extensionName];
+        if (params === undefined) {
+          (0, _warning2.default)(!!params, 'An RrwModule `' + moduleName + '` was bound with an extension `' + extensionName + '` with undefined value (skipped)');
+          return;
+        }
         resultExtensionStates[extensionName] = extension[method]({ moduleName: moduleName, options: options, params: params, state: state });
       }
     });
