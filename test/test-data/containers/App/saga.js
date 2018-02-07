@@ -15,8 +15,6 @@ function* pingWatcher() {
   });
 }
 
-export default function* root() {
-  yield all([
-    call(pingWatcher),
-  ]);
-}
+export default [
+  pingWatcher,
+];

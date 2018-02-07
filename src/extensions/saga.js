@@ -12,7 +12,15 @@ export default class RrwExSaga extends RrwExtension {
 
   start(){
     if(this.options.staticSaga){
-      this.middleware.run(this.options.staticSaga);
+      if(Array.isArray(this.options.staticSaga)){
+        let sagas = this.options.staticSaga;
+        this.staticSaga = function* () {
+          yield all(sagas.map(saga => call(saga)));
+        }
+      }else{
+        this.staticSaga = this.options.staticSaga;
+      }
+      this.middleware.run(this.staticSaga);
     }
   }
 

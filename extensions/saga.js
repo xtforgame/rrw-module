@@ -57,7 +57,29 @@ var RrwExSaga = (_temp = _class = function (_RrwExtension) {
     key: 'start',
     value: function start() {
       if (this.options.staticSaga) {
-        this.middleware.run(this.options.staticSaga);
+        if (Array.isArray(this.options.staticSaga)) {
+          var sagas = this.options.staticSaga;
+          this.staticSaga = /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+            return _regenerator2.default.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return (0, _effects.all)(sagas.map(function (saga) {
+                      return (0, _effects.call)(saga);
+                    }));
+
+                  case 2:
+                  case 'end':
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          });
+        } else {
+          this.staticSaga = this.options.staticSaga;
+        }
+        this.middleware.run(this.staticSaga);
       }
     }
 
@@ -93,18 +115,18 @@ var RrwExSaga = (_temp = _class = function (_RrwExtension) {
 
       if (Array.isArray(saga)) {
         saga = /*#__PURE__*/_regenerator2.default.mark(function saga() {
-          return _regenerator2.default.wrap(function saga$(_context) {
+          return _regenerator2.default.wrap(function saga$(_context2) {
             while (1) {
-              switch (_context.prev = _context.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
-                  _context.next = 2;
+                  _context2.next = 2;
                   return (0, _effects.all)(_saga.map(function (saga) {
                     return (0, _effects.call)(saga);
                   }));
 
                 case 2:
                 case 'end':
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
           }, saga, this);

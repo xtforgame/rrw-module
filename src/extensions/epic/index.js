@@ -9,8 +9,11 @@ export default class RrwExEpic extends RrwExtension {
 
   getReduxMiddlewares() {
     // this.rootInjectable = createInjectableEpic(emptyEpic);
-    this.options.staticEpic = this.options.staticEpic || emptyEpic;
-    this.rootInjectable = createInjectableEpic(this.options.staticEpic);
+    this.staticEpic = this.options.staticEpic || emptyEpic;
+    if(Array.isArray(this.staticEpic)){
+      this.staticEpic = combineEpics(...this.staticEpic);
+    }
+    this.rootInjectable = createInjectableEpic(this.staticEpic);
     this.middleware = createEpicMiddleware(this.rootInjectable.injectableEpic);
     return this.middleware;
   }
@@ -48,7 +51,7 @@ export default class RrwExEpic extends RrwExtension {
   //   // }
 
   //   const injectable = this.injectMap[moduleName] = makeEpicInjectable(epic);
-  //   createInjectableEpic(this.options.staticEpic, Object.keys(this.injectMap).map(key => this.injectMap[key].injectableEpic));
+  //   createInjectableEpic(this.staticEpic, Object.keys(this.injectMap).map(key => this.injectMap[key].injectableEpic));
   //   injectable.inject();
   //   return injectable;
   // }
@@ -72,7 +75,7 @@ export default class RrwExEpic extends RrwExtension {
     }
 
     const injectable = this.injectMap[moduleName] = makeEpicInjectable(epic);
-    createInjectableEpic(this.options.staticEpic, Object.keys(this.injectMap).map(key => this.injectMap[key].injectableEpic));
+    createInjectableEpic(this.staticEpic, Object.keys(this.injectMap).map(key => this.injectMap[key].injectableEpic));
     injectable.inject();
     return injectable;
   }

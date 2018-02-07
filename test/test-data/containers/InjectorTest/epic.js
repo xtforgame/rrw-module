@@ -24,7 +24,7 @@ const tickEpic = (action$, store) => {
   )
 };
 
-export default combineEpics(
+export default [
   synTickEpic,
   tickEpic
-);
+];
