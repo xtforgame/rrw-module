@@ -129,7 +129,9 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
       (0, _createInjectableEpic2.default)(this.staticEpic, Object.keys(this.injectMap).map(function (key) {
         return _this2.injectMap[key].injectableEpic;
       }));
-      injectable.inject();
+      Object.keys(this.injectMap).map(function (key) {
+        return _this2.injectMap[key].inject();
+      });
       return injectable;
     }
   }, {
@@ -138,7 +140,7 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
       if (!this.refCounters[moduleName]) {
         injectable && injectable.remove();
         this.injectMap[moduleName] && this.injectMap[moduleName].remove();
-        this.injectMap[moduleName] = null;
+        delete this.injectMap[moduleName];
       }
     }
   }]);
