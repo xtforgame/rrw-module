@@ -33,13 +33,13 @@ var _RrwExtension2 = require('../../lib/RrwExtension');
 
 var _RrwExtension3 = _interopRequireDefault(_RrwExtension2);
 
-var _createInjectableEpic = require('./createInjectableEpic');
+var _appendRootEpic = require('./appendRootEpic');
 
-var _createInjectableEpic2 = _interopRequireDefault(_createInjectableEpic);
+var _appendRootEpic2 = _interopRequireDefault(_appendRootEpic);
 
-var _makeEpicInjectable = require('./makeEpicInjectable');
+var _Injectable = require('./Injectable');
 
-var _makeEpicInjectable2 = _interopRequireDefault(_makeEpicInjectable);
+var _Injectable2 = _interopRequireDefault(_Injectable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54,84 +54,41 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
   (0, _createClass3.default)(RrwExEpic, [{
     key: 'getReduxMiddlewares',
     value: function getReduxMiddlewares() {
-      // this.rootInjectable = createInjectableEpic(emptyEpic);
-      this.staticEpic = this.options.staticEpic || _makeEpicInjectable.emptyEpic;
+      // this.mergedEpic = appendRootEpic(emptyEpic);
+      this.staticEpic = this.options.staticEpic || _Injectable.emptyEpic;
       if (Array.isArray(this.staticEpic)) {
         this.staticEpic = _reduxObservable.combineEpics.apply(undefined, (0, _toConsumableArray3.default)(this.staticEpic));
       }
-      this.rootInjectable = (0, _createInjectableEpic2.default)(this.staticEpic);
-      this.middleware = (0, _reduxObservable.createEpicMiddleware)(this.rootInjectable.injectableEpic);
+      this.mergedEpic = (0, _appendRootEpic2.default)();
+      this.middleware = (0, _reduxObservable.createEpicMiddleware)(this.mergedEpic);
       return this.middleware;
     }
   }, {
     key: 'start',
     value: function start() {
-      // this.rootInjectable.remove();
-      this.rootInjectable.inject();
+      (0, _appendRootEpic2.default)(this.staticEpic);
     }
-
-    // getInjectable(moduleName){
-    //   return this.injectMap[moduleName];
-    // }
-
-    // remove(moduleName, onlySpecificInjectable){
-    //   const injectable = this.injectMap[moduleName];
-    //   if(injectable){
-    //     if(!onlySpecificInjectable || onlySpecificInjectable === injectable){
-    //       injectable.remove();
-    //     }
-    //   }
-    //   return injectable;
-    // }
-
-    // inject(moduleName, _epic){
-    //   let epic = _epic;
-
-    //   if(Array.isArray(epic)){
-    //     epic = combineEpics(..._epic);
-    //   }
-
-    //   // // I think we don't really need to explicit remove the origin one
-    //   // let originInjectable = this.injectMap[moduleName];
-    //   // if(originInjectable){
-    //   //   originInjectable.remove();
-    //   // }
-
-    //   const injectable = this.injectMap[moduleName] = makeEpicInjectable(epic);
-    //   createInjectableEpic(this.staticEpic, Object.keys(this.injectMap).map(key => this.injectMap[key].injectableEpic));
-    //   injectable.inject();
-    //   return injectable;
-    // }
-
-    // remove(moduleName, injectable){
-    //   console.log('this.refCounters[moduleName] :', this.refCounters[moduleName]);
-    //   if(this.injectMap[moduleName] === injectable){
-    //     this.injectMap[moduleName] = null;
-    //   }
-    //   return (injectable && injectable.remove());
-    // }
-
   }, {
     key: 'inject',
     value: function inject(moduleName, _epic) {
-      var _this2 = this;
-
       if (this.refCounters[moduleName] > 1) {
         return;
       }
-      var epic = _epic;
 
+      var epic = _epic;
       if (Array.isArray(epic)) {
         epic = _reduxObservable.combineEpics.apply(undefined, (0, _toConsumableArray3.default)(_epic));
       }
 
-      var injectable = this.injectMap[moduleName] = (0, _makeEpicInjectable2.default)(epic);
-      (0, _createInjectableEpic2.default)(this.staticEpic, Object.keys(this.injectMap).map(function (key) {
-        return _this2.injectMap[key].injectableEpic;
-      }));
-      Object.keys(this.injectMap).map(function (key) {
-        return _this2.injectMap[key].inject();
-      });
+      var injectable = this.injectMap[moduleName];
+      if (injectable) {
+        injectable.inject(epic);
+      } else {
+        injectable = this.injectMap[moduleName] = new _Injectable2.default(epic);
+        (0, _appendRootEpic2.default)(injectable.injectableEpic);
+        injectable.inject();
+      }
+
       return injectable;
     }
   }, {
@@ -140,7 +97,6 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
       if (!this.refCounters[moduleName]) {
         injectable && injectable.remove();
         this.injectMap[moduleName] && this.injectMap[moduleName].remove();
-        delete this.injectMap[moduleName];
       }
     }
   }]);
