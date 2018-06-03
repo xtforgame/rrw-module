@@ -16,7 +16,7 @@ export default class RrwExReducer extends RrwExtension {
     }
 
     this.injectMap[moduleName] = reducer;
-    this.store.replaceReducer(createReducer(this.options.staticReducers, this.injectMap));
+    this.store.replaceReducer(createReducer(this.options.staticReducers, this.injectMap, this.options.createRootReducer));
     return reducer;
   };
 }

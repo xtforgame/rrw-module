@@ -13,6 +13,21 @@ const staticReducers = {
 };
 
 export default (initialState) => configureStore(staticReducers, fromJS(initialState), {
+  reducerOptions: {
+    createRootReducer: ((rootReducer) => (state, action) => {
+      /*
+      // provide a chance to clear redux
+      if ( action.type === CLEAR_REDUX ) {
+        state = {
+          xxx: state.xxx,
+        };
+        // or
+        state = undefined;
+      }
+      */
+      return rootReducer(state, action);
+    })
+  },
   extensions: [
     {
       extension: RrwExEpic,

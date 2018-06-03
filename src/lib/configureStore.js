@@ -6,6 +6,7 @@ import storeMixin from '../utils/storeMixin';
 
 let store = null;
 export default (staticReducers, initialState = {}, {
+  reducerOptions = {},
   extensions: inExtDescriptions = [],
   middlewares: customMiddlewares = [],
   compose = reduxCompose,
@@ -15,6 +16,7 @@ export default (staticReducers, initialState = {}, {
       extension: RrwExReducer,
       options: {
         staticReducers,
+        ...reducerOptions,
       },
     },
     ...inExtDescriptions,
@@ -36,7 +38,7 @@ export default (staticReducers, initialState = {}, {
   });
 
   store = createStore(
-    createReducer(staticReducers),
+    createReducer(staticReducers, {}, reducerOptions.createRootReducer),
     initialState,
     compose(
       applyMiddleware(...middlewares, ...customMiddlewares)

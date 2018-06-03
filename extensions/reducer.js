@@ -56,7 +56,7 @@ var RrwExReducer = (_temp = _class = function (_RrwExtension) {
       }
 
       this.injectMap[moduleName] = reducer;
-      this.store.replaceReducer((0, _createReducer2.default)(this.options.staticReducers, this.injectMap));
+      this.store.replaceReducer((0, _createReducer2.default)(this.options.staticReducers, this.injectMap, this.options.createRootReducer));
       return reducer;
     }
   }]);

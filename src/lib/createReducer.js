@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux-immutable';
 
-export default function createReducer(staticReducers, moduleReducers) {
+const defaultRootReducerCreator = (rootReducer) => (state, action) => rootReducer(state, action);
+
+export default function createReducer(staticReducers, moduleReducers, rootReducerCreator = defaultRootReducerCreator) {
   // console.log('moduleReducers :', moduleReducers);
-  return combineReducers({
+  return rootReducerCreator(combineReducers({
     ...staticReducers,
     ...moduleReducers,
-  });
+  }));
 }
