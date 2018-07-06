@@ -58,7 +58,7 @@
     "rxjs": "^5.5.6"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./setupTests.js"
+    "setupTestFrameworkScriptFile": "./test/setupTests.js"
   },
   "dependencies": {
     "warning": "^3.0.0"
