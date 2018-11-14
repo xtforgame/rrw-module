@@ -11,5 +11,37 @@
         "regenerator": true
       }
     ]
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["module-resolver", {
+          "alias": {
+            "~": "./test/integration-test",
+            "library": "./src"
+          }
+        }]
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["module-resolver", {
+          "alias": {
+            "~": "./test/integration-test",
+            "library": "./src"
+          }
+        }]
+      ]
+    },
+    "test": {
+      "plugins": [
+        ["module-resolver", {
+          "alias": {
+            "~": "./test/integration-test",
+            "library": "./src"
+          }
+        }]
+      ]
+    }
+  }
 }

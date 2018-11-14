@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 
-import { configureStore } from '../../src';
-import RrwExEpic from '../../src/extensions/epic';
-import RrwExSaga from '../../src/extensions/saga';
+import { configureStore } from 'library';
+import RrwExEpic from 'library/extensions/epic';
+import RrwExSaga from 'library/extensions/saga';
 
 import appReducer from './containers/App/reducer';
 import appEpic from './containers/App/epic';

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../../",
+    "paths": {
+      "~/*": ["test/integration-test/*"],
+      "library": ["src"],
+      "library/*": ["src/*"],
+    },
+  }
+}
