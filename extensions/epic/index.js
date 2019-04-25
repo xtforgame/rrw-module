@@ -5,25 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp;
 
@@ -43,21 +25,30 @@ var _Injectable2 = _interopRequireDefault(_Injectable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var RrwExEpic = (_temp = _class = function (_RrwExtension) {
-  (0, _inherits3.default)(RrwExEpic, _RrwExtension);
+  _inherits(RrwExEpic, _RrwExtension);
 
   function RrwExEpic() {
-    (0, _classCallCheck3.default)(this, RrwExEpic);
-    return (0, _possibleConstructorReturn3.default)(this, (RrwExEpic.__proto__ || Object.getPrototypeOf(RrwExEpic)).apply(this, arguments));
+    _classCallCheck(this, RrwExEpic);
+
+    return _possibleConstructorReturn(this, (RrwExEpic.__proto__ || Object.getPrototypeOf(RrwExEpic)).apply(this, arguments));
   }
 
-  (0, _createClass3.default)(RrwExEpic, [{
+  _createClass(RrwExEpic, [{
     key: 'getReduxMiddlewares',
     value: function getReduxMiddlewares() {
       // this.mergedEpic = appendRootEpic(emptyEpic);
       this.staticEpic = this.options.staticEpic || _Injectable.emptyEpic;
       if (Array.isArray(this.staticEpic)) {
-        this.staticEpic = _reduxObservable.combineEpics.apply(undefined, (0, _toConsumableArray3.default)(this.staticEpic));
+        this.staticEpic = _reduxObservable.combineEpics.apply(undefined, _toConsumableArray(this.staticEpic));
       }
       this.mergedEpic = (0, _appendRootEpic2.default)();
       this.middleware = (0, _reduxObservable.createEpicMiddleware)(this.mergedEpic);
@@ -77,7 +68,7 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
 
       var epic = _epic;
       if (Array.isArray(epic)) {
-        epic = _reduxObservable.combineEpics.apply(undefined, (0, _toConsumableArray3.default)(_epic));
+        epic = _reduxObservable.combineEpics.apply(undefined, _toConsumableArray(_epic));
       }
 
       var injectable = this.injectMap[moduleName];
@@ -100,6 +91,7 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
       }
     }
   }]);
+
   return RrwExEpic;
 }(_RrwExtension3.default), _class.$name = 'epic', _temp);
 exports.default = RrwExEpic;

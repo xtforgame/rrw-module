@@ -1,6 +1,6 @@
 import { call, all } from 'redux-saga/effects';
 import createSagaMiddleware from 'redux-saga';
-import RrwExtension from '../lib/RrwExtension';
+import RrwExtension from '../../lib/RrwExtension';
 
 export default class RrwExSaga extends RrwExtension {
   static $name = 'saga';

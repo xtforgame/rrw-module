@@ -4,18 +4,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 var _warning = require('warning');
 
 var _warning2 = _interopRequireDefault(_warning);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 exports.default = function (store, staticReducers, extensions) {
-  var reversedExtensions = [].concat((0, _toConsumableArray3.default)(extensions)).reverse();
+  var reversedExtensions = [].concat(_toConsumableArray(extensions)).reverse();
   store.rrwModule = {};
   store.rrwModule.staticReducers = staticReducers;
   store.rrwModule.extensions = extensions;
