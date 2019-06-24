@@ -46,7 +46,9 @@ export default class RrwExReducer extends RrwExtension {
 
   remove(moduleName){
     if(!this.refCounters[moduleName] && this.resetStateBeforeUnmount){
-      this.store.dispatch({ type: this.resetAction });
+      setTimeout(() => {
+        this.store.dispatch({ type: this.resetAction });
+      });
       // delete this.injectMap[moduleName];
       // this.store.replaceReducer(createReducer(this.options.staticReducers, this.injectMap, this.options.createRootReducer));
     }

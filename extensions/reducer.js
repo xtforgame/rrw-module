@@ -92,8 +92,12 @@ var RrwExReducer = (_temp = _class = function (_RrwExtension) {
   }, {
     key: 'remove',
     value: function remove(moduleName) {
+      var _this3 = this;
+
       if (!this.refCounters[moduleName] && this.resetStateBeforeUnmount) {
-        this.store.dispatch({ type: this.resetAction });
+        setTimeout(function () {
+          _this3.store.dispatch({ type: _this3.resetAction });
+        });
         // delete this.injectMap[moduleName];
         // this.store.replaceReducer(createReducer(this.options.staticReducers, this.injectMap, this.options.createRootReducer));
       }
