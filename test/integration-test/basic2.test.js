@@ -71,6 +71,9 @@ describe('Basic', () => {
       expect(getLocal('tockCounter')).toBe(1);
       wrapper.unmount();
 
+      return delay(1);
+    })
+    .then(() => {
       expect(getLocal('tockCounter')).toBe(0);
     });
   });
@@ -86,20 +89,27 @@ describe('Basic', () => {
     expect(getLocal('pongCounter')).toBe(1);
 
     wrapper.setProps({ child: null });
-    store.dispatch(globalPing());
-    store.dispatch(localPing());
 
-    expect(getGlobal('pongCounter')).toBe(2);
-    expect(getLocal('pongCounter')).toBe(0);
-
-    wrapper.setProps({ child: <InjectorTest2 /> });
-    store.dispatch(globalPing());
-    store.dispatch(localPing());
-
-    expect(getGlobal('pongCounter')).toBe(3);
-    expect(getLocal('pongCounter')).toBe(1);
-
-    wrapper.unmount();
-    expect(getLocal('tockCounter')).toBe(0);
+    return delay(1)
+    .then(() => {
+      store.dispatch(globalPing());
+      store.dispatch(localPing());
+  
+      expect(getGlobal('pongCounter')).toBe(2);
+      expect(getLocal('pongCounter')).toBe(0);
+  
+      wrapper.setProps({ child: <InjectorTest2 /> });
+      store.dispatch(globalPing());
+      store.dispatch(localPing());
+  
+      expect(getGlobal('pongCounter')).toBe(3);
+      expect(getLocal('pongCounter')).toBe(1);
+  
+      wrapper.unmount();
+      return delay(1);
+    })
+    .then(() => {
+      expect(getLocal('pongCounter')).toBe(0);
+    });
   });
 });
