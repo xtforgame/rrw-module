@@ -1,58 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, useContext } from 'react';
+import { ReactReduxContext } from 'react-redux';
 import getDisplayName from '../utils/getDisplayName';
+import useModule from './useModule';
 
-export default (moduleName, extensionParams = {}, options = {}) => (Component) => {
-  if(!moduleName){
-    throw new Error('Module name required');
+// static contextTypes = {
+//   [storeKey]: PropTypes.shape({
+//     subscribe: PropTypes.func.isRequired,
+//     dispatch: PropTypes.func.isRequired,
+//     getState: PropTypes.func.isRequired,
+
+//     getStaticReducers: PropTypes.func.isRequired,
+//     getExtensions: PropTypes.func.isRequired,
+//     getReversedExtensions: PropTypes.func.isRequired,
+//     registerExtension: PropTypes.func.isRequired,
+//     rrwmDispatch: PropTypes.func.isRequired,
+//   }),
+// };
+
+export default (inputModuleName, extensionParams = {}, options = {}) => (Component) => {
+  const MakeModuleHoc = (props) => {
+    useModule(props, inputModuleName, extensionParams, options);
+    return (<Component {...props} />);
   }
-  
-  const storeKey = options.storeKey || 'store';
-  const MakeModuleHoc = class MakeModuleHoc extends React.Component {
-    static displayName = `makeModule(${getDisplayName(Component)})`;
-    static contextTypes = {
-      [storeKey]: PropTypes.shape({
-        subscribe: PropTypes.func.isRequired,
-        dispatch: PropTypes.func.isRequired,
-        getState: PropTypes.func.isRequired,
 
-        getStaticReducers: PropTypes.func.isRequired,
-        getExtensions: PropTypes.func.isRequired,
-        getReversedExtensions: PropTypes.func.isRequired,
-        registerExtension: PropTypes.func.isRequired,
-        rrwmDispatch: PropTypes.func.isRequired,
-      }),
-    };
-
-    constructor(props, context) {
-      super(props, context);
-      this.store = props[storeKey] || context[storeKey]
-    }
-
-    componentWillMount(){
-      // console.log('this.props :', this.props);
-      // console.log('extensionParams :', extensionParams);
-      this.moduleName = moduleName || getDisplayName(Component);
-      this.extensionStates = this.store.rrwmDispatch('willMount', {
-        moduleName: this.moduleName,
-        options,
-        extensionParams,
-      });
-    }
-
-    componentWillUnmount(){
-      this.store.rrwmDispatch('willUnmount', {
-        moduleName: this.moduleName,
-        options,
-        extensionParams,
-        extensionStates: this.extensionStates,
-      }, true);
-      this.extensionStates = {};
-    }
-
-    render(){
-      return (<Component {...this.props} />);
-    }
-  }
+  MakeModuleHoc.displayName = `makeModule(${getDisplayName(Component)})`;
   return MakeModuleHoc;
 }

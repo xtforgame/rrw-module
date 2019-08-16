@@ -13,12 +13,13 @@ export default class RrwExEpic extends RrwExtension {
     if(Array.isArray(this.staticEpic)){
       this.staticEpic = combineEpics(...this.staticEpic);
     }
-    this.mergedEpic = appendRootEpic();
-    this.middleware = createEpicMiddleware(this.mergedEpic);
+    this.middleware = createEpicMiddleware();
     return this.middleware;
   }
 
   start(){
+    this.mergedEpic = appendRootEpic();
+    this.middleware.run(this.mergedEpic);
     appendRootEpic(this.staticEpic);
   }
 

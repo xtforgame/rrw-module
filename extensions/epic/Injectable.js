@@ -7,14 +7,14 @@ exports.default = exports.emptyEpic = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Subject = require('rxjs/Subject');
-
 var _rxjs = require('rxjs');
+
+var _operators = require('rxjs/operators');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var emptyEpic = exports.emptyEpic = function emptyEpic() {
-  return _rxjs.Observable.empty();
+  return (0, _rxjs.empty)();
 };
 
 var Injectable = function () {
@@ -24,12 +24,12 @@ var Injectable = function () {
     _classCallCheck(this, Injectable);
 
     this.epic = epic;
-    this.subject = new _Subject.Subject();
+    this.subject = new _rxjs.Subject();
     this.injectableEpic = function (action$, store) {
-      return _this.subject.switchMap(function (epic) {
+      return _this.subject.pipe((0, _operators.switchMap)(function (epic) {
         // console.log('epic :', epic);
         return epic(action$, store);
-      });
+      }));
     };
     this.injected = false;
   }

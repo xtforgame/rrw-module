@@ -1,17 +1,21 @@
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs';
+import { Subject, Observable, empty } from 'rxjs';
+import {
+  switchMap,
+} from 'rxjs/operators';
 
-export const emptyEpic = () => Observable.empty();
+export const emptyEpic = () => empty();
 
 export default class Injectable {
   constructor(epic){
     this.epic = epic;
     this.subject = new Subject();
     this.injectableEpic = (action$, store) =>
-      this.subject.switchMap(epic => {
-        // console.log('epic :', epic);
-        return epic(action$, store);
-      });
+      this.subject.pipe(
+        switchMap(epic => {
+          // console.log('epic :', epic);
+          return epic(action$, store);
+        })
+      );
     this.injected = false;
   }
 

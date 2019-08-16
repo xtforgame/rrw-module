@@ -5,14 +5,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = appendRootEpic;
 
-var _Subject = require('rxjs/Subject');
+var _rxjs = require('rxjs');
 
-var subject = new _Subject.Subject();
+var _operators = require('rxjs/operators');
+
+var subject = new _rxjs.Subject();
 var mergedEpic = function mergedEpic(action$, store) {
-  return subject.mergeMap(function (epic) {
+  return subject.pipe((0, _operators.mergeMap)(function (epic) {
     // console.log('epic :', epic);
     return epic(action$, store);
-  });
+  }));
 };
 
 function appendRootEpic() {

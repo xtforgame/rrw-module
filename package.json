@@ -1,6 +1,6 @@
 {
   "name": "rrw-module",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "A hackable, customizable react-redux-whatever module manager",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "immutable": "^3.8.1 || ^4.0.0-rc.1",
     "prop-types": "*",
     "react": "*",
-    "redux": ">=3.1 <4",
+    "redux": ">=4 <5",
     "redux-immutable": ">=4 <5"
   },
   "devDependencies": {
@@ -48,18 +48,19 @@
     "immutable": "3.8.1",
     "jest": "^22.0.5",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-redux": "^7.1.0",
     "react-test-renderer": "^16.2.0",
-    "redux": "3.7.2",
+    "redux": "^4.0.4",
     "redux-immutable": "4.0.0",
-    "redux-observable": "^0.17.0",
+    "redux-observable": "^1.1.0",
     "redux-saga": "^0.16.0",
-    "rxjs": "^5.5.6"
+    "rxjs": "^6.5.2"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./test/setupTests.js"
+    "setupTestFrameworkScriptFile": "./test/setupTests.js",
+    "testURL": "http://localhost/"
   },
   "dependencies": {
     "warning": "^3.0.0"

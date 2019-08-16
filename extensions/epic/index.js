@@ -50,13 +50,14 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
       if (Array.isArray(this.staticEpic)) {
         this.staticEpic = _reduxObservable.combineEpics.apply(undefined, _toConsumableArray(this.staticEpic));
       }
-      this.mergedEpic = (0, _appendRootEpic2.default)();
-      this.middleware = (0, _reduxObservable.createEpicMiddleware)(this.mergedEpic);
+      this.middleware = (0, _reduxObservable.createEpicMiddleware)();
       return this.middleware;
     }
   }, {
     key: 'start',
     value: function start() {
+      this.mergedEpic = (0, _appendRootEpic2.default)();
+      this.middleware.run(this.mergedEpic);
       (0, _appendRootEpic2.default)(this.staticEpic);
     }
   }, {
