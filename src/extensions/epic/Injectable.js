@@ -9,11 +9,11 @@ export default class Injectable {
   constructor(epic){
     this.epic = epic;
     this.subject = new Subject();
-    this.injectableEpic = (action$, state$) =>
+    this.injectableEpic = (action$, state$, ...args) =>
       this.subject.pipe(
         switchMap(epic => {
           // console.log('epic :', epic);
-          return epic(action$, state$);
+          return epic(action$, state$, ...args);
         })
       );
     this.injected = false;

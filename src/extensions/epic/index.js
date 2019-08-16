@@ -7,13 +7,17 @@ import Injectable, { emptyEpic } from './Injectable';
 export default class RrwExEpic extends RrwExtension {
   static $name = 'epic';
 
-  getReduxMiddlewares() {
+  getReduxMiddlewares(getStore) {
     // this.mergedEpic = appendRootEpic(emptyEpic);
     this.staticEpic = this.options.staticEpic || emptyEpic;
     if(Array.isArray(this.staticEpic)){
       this.staticEpic = combineEpics(...this.staticEpic);
     }
-    this.middleware = createEpicMiddleware();
+    this.middleware = createEpicMiddleware({
+      dependencies: {
+        getStore,
+      },
+    });
     return this.middleware;
   }
 

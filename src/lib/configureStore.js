@@ -5,6 +5,8 @@ import RrwExReducer from '../extensions/reducer';
 import storeMixin from '../utils/storeMixin';
 
 let store = null;
+const getStore = () => store;
+
 export default (staticReducers, initialState = {}, {
   reducerOptions = {},
   extensions: inExtDescriptions = [],
@@ -29,7 +31,7 @@ export default (staticReducers, initialState = {}, {
 
   const middlewares = [];
   extensions.forEach(extension => {
-    const mdws = extension.getReduxMiddlewares();
+    const mdws = extension.getReduxMiddlewares(getStore);
     if(Array.isArray(mdws)){
       middlewares.concat(mdws);
     }else if(mdws){

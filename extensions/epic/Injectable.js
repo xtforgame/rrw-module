@@ -26,9 +26,13 @@ var Injectable = function () {
     this.epic = epic;
     this.subject = new _rxjs.Subject();
     this.injectableEpic = function (action$, state$) {
+      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
       return _this.subject.pipe((0, _operators.switchMap)(function (epic) {
         // console.log('epic :', epic);
-        return epic(action$, state$);
+        return epic.apply(undefined, [action$, state$].concat(args));
       }));
     };
     this.injected = false;

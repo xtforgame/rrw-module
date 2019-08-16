@@ -44,13 +44,17 @@ var RrwExEpic = (_temp = _class = function (_RrwExtension) {
 
   _createClass(RrwExEpic, [{
     key: 'getReduxMiddlewares',
-    value: function getReduxMiddlewares() {
+    value: function getReduxMiddlewares(getStore) {
       // this.mergedEpic = appendRootEpic(emptyEpic);
       this.staticEpic = this.options.staticEpic || _Injectable.emptyEpic;
       if (Array.isArray(this.staticEpic)) {
         this.staticEpic = _reduxObservable.combineEpics.apply(undefined, _toConsumableArray(this.staticEpic));
       }
-      this.middleware = (0, _reduxObservable.createEpicMiddleware)();
+      this.middleware = (0, _reduxObservable.createEpicMiddleware)({
+        dependencies: {
+          getStore: getStore
+        }
+      });
       return this.middleware;
     }
   }, {
