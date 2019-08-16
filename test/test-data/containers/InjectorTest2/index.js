@@ -25,7 +25,7 @@ export default makeModule('InjectorTest2', {
   saga,
 })(
   connect(
-    state => ({ pingCounter: state.get('InjectorTest2').pingCounter }),
+    state => ({ pingCounter: state.InjectorTest2.pingCounter }),
     { ping }
   )(
     InjectorTest

@@ -9,7 +9,7 @@ const App = ({greetName, greet, child}) => child;
 
 const mapStateToProps = (state) => {
   return {
-    greetName: state.get('global').greetName
+    greetName: state.global.greetName
   };
 }
 

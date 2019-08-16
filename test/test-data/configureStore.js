@@ -1,5 +1,3 @@
-import { fromJS } from 'immutable';
-
 import { configureStore } from 'library';
 import RrwExEpic from 'library/extensions/epic';
 import RrwExSaga from 'library/extensions/saga';
@@ -12,7 +10,7 @@ const staticReducers = {
   global: appReducer,
 };
 
-export default (initialState) => configureStore(staticReducers, fromJS(initialState), {
+export default (initialState) => configureStore(staticReducers, initialState, {
   reducerOptions: {
     createRootReducer: ((rootReducer) => (state, action) => {
       /*

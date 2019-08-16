@@ -36,11 +36,11 @@ describe('Basic', () => {
   });
 
   const getGlobal = (key) => {
-    return store.getState().get('global')[key];
+    return store.getState().global[key];
   }
   
   const getLocal = (key) => {
-    return store.getState().get('InjectorTest2')[key];
+    return store.getState().InjectorTest2[key];
   }
 
   it('Epic', () => {
