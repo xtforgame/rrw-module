@@ -10,10 +10,10 @@ var _rxjs = require('rxjs');
 var _operators = require('rxjs/operators');
 
 var subject = new _rxjs.Subject();
-var mergedEpic = function mergedEpic(action$, store) {
+var mergedEpic = function mergedEpic(action$, state$) {
   return subject.pipe((0, _operators.mergeMap)(function (epic) {
     // console.log('epic :', epic);
-    return epic(action$, store);
+    return epic(action$, state$);
   }));
 };
 

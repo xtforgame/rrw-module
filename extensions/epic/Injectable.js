@@ -25,10 +25,10 @@ var Injectable = function () {
 
     this.epic = epic;
     this.subject = new _rxjs.Subject();
-    this.injectableEpic = function (action$, store) {
+    this.injectableEpic = function (action$, state$) {
       return _this.subject.pipe((0, _operators.switchMap)(function (epic) {
         // console.log('epic :', epic);
-        return epic(action$, store);
+        return epic(action$, state$);
       }));
     };
     this.injected = false;

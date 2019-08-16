@@ -2,11 +2,11 @@ import { Subject } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 const subject = new Subject();
-const mergedEpic = (action$, store) =>
+const mergedEpic = (action$, state$) =>
   subject.pipe(
     mergeMap(epic => {
       // console.log('epic :', epic);
-      return epic(action$, store);
+      return epic(action$, state$);
     })
   );
 

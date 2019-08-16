@@ -15,16 +15,16 @@ var emptyEpic = exports.emptyEpic = function emptyEpic() {
 };
 
 function makeEpicInjectable(_originalEpic) {
-  var originalEpic = function originalEpic(action$, store) {
-    return _originalEpic(action$, store);
+  var originalEpic = function originalEpic(action$, state$) {
+    return _originalEpic(action$, state$);
   };
   // .takeUntil(action$.ofType(LOCATION_CHANGE));
 
   var subject = new _Subject.Subject();
-  var injectableEpic = function injectableEpic(action$, store) {
+  var injectableEpic = function injectableEpic(action$, state$) {
     return subject.switchMap(function (epic) {
       // console.log('epic :', epic);
-      return epic(action$, store);
+      return epic(action$, state$);
     });
   };
 

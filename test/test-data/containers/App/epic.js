@@ -8,12 +8,12 @@ import {
   tock,
 } from './actions';
 
-const synTickEpic = (action$, store) => {
+const synTickEpic = (action$, state$) => {
   return action$.ofType(SYN_TICK)
   .pipe(mergeMap(action => [tock()]));
 };
 
-const tickEpic = (action$, store) => {
+const tickEpic = (action$, state$) => {
   return action$.ofType(TICK)
   .pipe(
     mergeMap(action =>
